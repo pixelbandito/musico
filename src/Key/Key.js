@@ -9,7 +9,7 @@ const notes = {
 class Key extends Component {
   state = {
     playing: false,
-    context: new AudioContext(),
+    context: (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
   }
 
   componentDidMount() {
