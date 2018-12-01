@@ -1,14 +1,13 @@
 {
-  "main.css": "/musico/static/css/main.0d790245.chunk.css",
-  "main.js": "/musico/static/js/main.2031ffbe.chunk.js",
-  "main.js.map": "/musico/static/js/main.2031ffbe.chunk.js.map",
-  "static/js/1.d855c10c.chunk.js": "/musico/static/js/1.d855c10c.chunk.js",
-  "static/js/1.d855c10c.chunk.js.map": "/musico/static/js/1.d855c10c.chunk.js.map",
+  "main.css": "/musico/static/css/main.bf6d5731.chunk.css",
+  "main.js": "/musico/static/js/main.56ef61d4.chunk.js",
+  "main.js.map": "/musico/static/js/main.56ef61d4.chunk.js.map",
+  "static/js/1.79b0ee30.chunk.js": "/musico/static/js/1.79b0ee30.chunk.js",
+  "static/js/1.79b0ee30.chunk.js.map": "/musico/static/js/1.79b0ee30.chunk.js.map",
   "runtime~main.js": "/musico/static/js/runtime~main.498a023a.js",
   "runtime~main.js.map": "/musico/static/js/runtime~main.498a023a.js.map",
-  "static/media/logo.svg": "/musico/static/media/logo.5d5d9eef.svg",
-  "static/css/main.0d790245.chunk.css.map": "/musico/static/css/main.0d790245.chunk.css.map",
+  "static/css/main.bf6d5731.chunk.css.map": "/musico/static/css/main.bf6d5731.chunk.css.map",
   "index.html": "/musico/index.html",
-  "precache-manifest.d168098cba80fcbb3a9ad40d4abc0f9c.js": "/musico/precache-manifest.d168098cba80fcbb3a9ad40d4abc0f9c.js",
+  "precache-manifest.a7b30d9dc3b86c26af1e17fbcc8262fd.js": "/musico/precache-manifest.a7b30d9dc3b86c26af1e17fbcc8262fd.js",
   "service-worker.js": "/musico/service-worker.js"
 }
