@@ -13,9 +13,9 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <Key />
-          <Key />
-          <Key />
+          <Key note="c" />
+          <Key note="d" />
+          <Key note="e" />
         </header>
       </div>
     );
