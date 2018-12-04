@@ -18,6 +18,8 @@ class StrikeableDraggable extends Component {
   DraggableParent = React.createRef();
 
   handleMouseDown = (event) => {
+    console.log('handleMouseDown');
+
     const { onStrikeStart } = this.props;
 
     if (this.DraggableParent.current) {
@@ -50,6 +52,8 @@ class StrikeableDraggable extends Component {
   }
 
   handleTouchStart = (event, ...rest) => {
+    console.log('handleTouchStart');
+
     const { onStrikeStart } = this.props;
     onStrikeStart && onStrikeStart();
   }
@@ -101,16 +105,12 @@ class StrikeableDraggable extends Component {
   }
 
   render() {
+    const { style } = this.props;
+
     return (
       <div
         ref={this.DraggableParent}
-        style={{
-          display: 'inline-block',
-          height: '100px',
-          width: '100px',
-          background: 'pink',
-          userSelect: 'none',
-        }}
+        style={{ ...style }}
       >
         <Draggable
           onMouseDown={this.handleMouseDown}

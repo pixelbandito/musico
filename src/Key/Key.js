@@ -41,7 +41,7 @@ class Key extends Component {
   handleStrikeStart = () => {
     console.log('handleStrikeStart');
     const { context } = this.state;
-    this.gainNode.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.1);
+    this.gainNode.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.2);
     this.setState({ playing: true });
   }
 
@@ -53,19 +53,29 @@ class Key extends Component {
   }
 
   render() {
+    const { style } = this.props;
+
     return (
       <div
         className="Key"
         style={{
+          ...style,
           display: 'grid',
           gridTemplateRows: '1fr',
           gridTemplateColumns: '1fr',
+          background: 'ivory',
+          border: '1px solid lightgray',
         }}
       >
         <Strikeable
           onStrikeStart={this.handleStrikeStart}
           onStrike={() => {}}
           onStrikeEnd={this.handleStrikeEnd}
+          style={{
+            display: 'grid',
+            gridTemplateRows: '1fr',
+            gridTemplateColumns: '1fr',
+          }}
         />
       </div>
     );
