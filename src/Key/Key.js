@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Strikeable from '../Strikeable';
+
 const notes = {
   c: 261.6,
   d: 293.7,
@@ -36,11 +38,36 @@ class Key extends Component {
     this.setState(prevState => ({ playing: !prevState.playing }))
   }
 
+  handleStrikeStart = () => {
+    console.log('handleStrikeStart');
+    const { context } = this.state;
+    this.gainNode.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.1);
+    this.setState({ playing: true });
+  }
+
+  handleStrikeEnd = () => {
+    console.log('handleStrikeEnd');
+    const { context } = this.state;
+    this.gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.4);
+    this.setState({ playing: false });
+  }
+
   render() {
     return (
-      <button onClick={this.handleClick}>
-        Click me
-      </button>
+      <div
+        className="Key"
+        style={{
+          display: 'grid',
+          gridTemplateRows: '1fr',
+          gridTemplateColumns: '1fr',
+        }}
+      >
+        <Strikeable
+          onStrikeStart={this.handleStrikeStart}
+          onStrike={() => {}}
+          onStrikeEnd={this.handleStrikeEnd}
+        />
+      </div>
     );
   }
 }
