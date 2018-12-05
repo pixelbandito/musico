@@ -5,7 +5,9 @@ import Key from '../Key';
 class KeyBoard extends Component {
   render() {
     const keySizing = {
-      flex: '0 0 50%',
+      flex: '0 0 12.5%',
+      minWidth: '0',
+      overflow: 'hidden',
     };
 
     return (
@@ -15,16 +17,41 @@ class KeyBoard extends Component {
           display: 'flex',
           flexFlow: 'row nowrap',
           alignItems: 'stretch',
-          justifyContent: 'space-between',
-          height: '100vh'
+          justifyContent: 'flex-start',
+          height: '100vh',
+          userSelect: 'none',
         }}
       >
         <Key
-          note="c"
+          note="C4"
           style={{ ...keySizing }}
         />
         <Key
-          note="d"
+          note="D4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="E4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="F4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="G4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="A4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="B4"
+          style={{ ...keySizing }}
+        />
+        <Key
+          note="C5"
           style={{ ...keySizing }}
         />
       </div>

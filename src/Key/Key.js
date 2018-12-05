@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
+import { noteValues } from './notes';
 import Strikeable from '../Strikeable';
 
-const notes = {
-  c: 261.6,
-  d: 293.7,
-  e: 329.6,
-}
+// const notes = {
+//   c: 261.6,
+//   d: 293.7,
+//   e: 329.6,
+// }
 
 class Key extends Component {
   state = {
@@ -20,7 +21,7 @@ class Key extends Component {
     this.gainNode = context.createGain()
     this.oscillator = context.createOscillator()
     this.oscillator.type = 'sine';
-    this.oscillator.frequency.value = notes[note];
+    this.oscillator.frequency.value = noteValues[note];
     this.oscillator.start(0);
     this.gainNode.gain.setValueAtTime(0.0001, context.currentTime);
     this.oscillator.connect(this.gainNode);
