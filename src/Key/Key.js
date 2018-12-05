@@ -63,8 +63,8 @@ class Key extends Component {
           display: 'grid',
           gridTemplateRows: '1fr',
           gridTemplateColumns: '1fr',
-          background: 'ivory',
           border: '1px solid lightgray',
+          backgroundColor: this.state.playing ? 'pink' : 'ivory',
         }}
       >
         <Strikeable

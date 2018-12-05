@@ -45,20 +45,28 @@ class StrikeableDraggable extends Component {
         touchX: touchX,
         touchY: touchY,
         width,
+        lastEvent: 'handleMouseDown',
       });
 
       onStrikeStart && onStrikeStart({ touchY });
     }
   }
 
-  handleTouchStart = (event, ...rest) => {
+  handleTouchStart = (event) => {
     console.log('handleTouchStart');
 
     const { onStrikeStart } = this.props;
+
+    this.setState({
+      lastEvent: 'handleTouchStart',
+    });
+
     onStrikeStart && onStrikeStart();
   }
 
-  handleDrag = (event, ...rest) => {
+  handleDrag = (event) => {
+    console.log('handleDrag');
+
     const { onStrike } = this.props;
 
     const {
@@ -88,6 +96,7 @@ class StrikeableDraggable extends Component {
       this.setState({
         touchX: touchX,
         touchY: touchY,
+        lastEvent: 'handleDrag',
       });
 
       onStrike && onStrike({ touchY });
@@ -95,10 +104,13 @@ class StrikeableDraggable extends Component {
   }
 
   handleDragEnd = () => {
+    console.log('handleDragEnd');
+
     const { onStrikeEnd } = this.props;
 
     this.setState({
       dragging: false,
+      lastEvent: 'handleDragEnd',
     });
 
     onStrikeEnd && onStrikeEnd();
@@ -110,7 +122,10 @@ class StrikeableDraggable extends Component {
     return (
       <div
         ref={this.DraggableParent}
-        style={{ ...style }}
+        style={{
+          ...style,
+          position: 'relative',
+        }}
       >
         <Draggable
           onMouseDown={this.handleMouseDown}
@@ -124,11 +139,25 @@ class StrikeableDraggable extends Component {
         >
           {(event) => (
             <div>
-              Drag me
-              <br />
-              X: {this.state.touchX}
-              <br />
-              Y: {this.state.touchY}
+              <div style={{ userSelect: 'none' }}>
+                Drag me
+                <br />
+                X: {this.state.touchX}
+                <br />
+                Y: {this.state.touchY}
+                <br />
+                Last event: {this.state.lastEvent}
+              </div>
+              <div
+                style={{
+                  ...style,
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: '0',
+                  left: '0',
+                }}
+              />
             </div>
           )}
         </Draggable>
