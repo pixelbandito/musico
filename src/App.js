@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import './App.css';
 
 // import Key from '../Key';
@@ -8,16 +9,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <div>
-            <KeyBoard />
-          </div>
-          {/*
-            <div>
-              <Key note="c" />
-              <Key note="d" />
-              <Key note="e" />
-            </div>
-          */}
+          <Helmet>
+              <title>Musico</title>
+          </Helmet>
+          <KeyBoard
+            volMute={0.0001}
+            volMax={1}
+            attack={0.05}
+            decay={3}
+            release={1}
+          />
       </div>
     );
   }

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { noteValues } from './notes';
 import Strikeable from '../Strikeable';
-
-// const notes = {
-//   c: 261.6,
-//   d: 293.7,
-//   e: 329.6,
-// }
 
 class Key extends Component {
   state = {
@@ -16,40 +11,49 @@ class Key extends Component {
   }
 
   componentDidMount() {
-    const { note } = this.props;
+    const {
+      note,
+      volMute,
+    } = this.props;
+
     const { context } = this.state;
     this.gainNode = context.createGain()
     this.oscillator = context.createOscillator()
     this.oscillator.type = 'sine';
     this.oscillator.frequency.value = noteValues[note];
     this.oscillator.start(0);
-    this.gainNode.gain.setValueAtTime(0.0001, context.currentTime);
+    this.gainNode.gain.setValueAtTime(volMute, context.currentTime);
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(context.destination);
   }
 
-  handleClick = () => {
-    const { context, playing } = this.state;
-
-    if (playing) {
-      this.gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.4);
-    } else {
-      this.gainNode.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.1);
-    }
-    this.setState(prevState => ({ playing: !prevState.playing }))
-  }
-
   handleStrikeStart = () => {
     console.log('handleStrikeStart');
+
+    const {
+      volMax,
+      volMute,
+      attack,
+      decay
+    } = this.props;
+
     const { context } = this.state;
-    this.gainNode.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.2);
+    this.gainNode.gain.cancelScheduledValues(context.currentTime);
+    this.gainNode.gain.exponentialRampToValueAtTime(volMax, context.currentTime + attack);
+    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + decay);
     this.setState({ playing: true });
   }
 
   handleStrikeEnd = () => {
+    const {
+      volMute,
+      release,
+    } = this.props;
+
     console.log('handleStrikeEnd');
     const { context } = this.state;
-    this.gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.4);
+    this.gainNode.gain.cancelScheduledValues(context.currentTime);
+    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release);
     this.setState({ playing: false });
   }
 
@@ -82,5 +86,23 @@ class Key extends Component {
     );
   }
 }
+
+Key.propTypes = {
+  note: PropTypes.string,
+  volMute: PropTypes.number,
+  volMax: PropTypes.number,
+  attack: PropTypes.number,
+  decay: PropTypes.number,
+  release: PropTypes.number,
+};
+
+Key.defaultProps = {
+  note: 'C4',
+  volMute: 0.0001,
+  volMax: 1,
+  attack: 0.03,
+  decay: 2,
+  release: 1,
+};
 
 export default Key;
