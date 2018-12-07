@@ -15,7 +15,7 @@ class KeyBoard extends Component {
     } = this.props;
 
     const keySizing = {
-      flex: '0 0 12.5%',
+      flex: '1 1 auto',
       minWidth: '0',
       overflow: 'hidden',
     };
@@ -44,54 +44,29 @@ class KeyBoard extends Component {
           userSelect: 'none',
         }}
       >
+      {[
+        'C4',
+        'C#4',
+        'D4',
+        'D#4',
+        'E4',
+        'F4',
+        'F#4',
+        'G4',
+        'G#4',
+        'A4',
+        'A#4',
+        'B4',
+        'C5',
+      ].map(note => (
         <Key
-          note="C4"
+          key={note}
+          note={note}
           { ...keyVolumeProps }
           { ...keyADSRProps }
           style={{ ...keySizing }}
         />
-        <Key
-          note="D4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="E4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="F4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="G4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="A4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="B4"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
-        <Key
-          note="C5"
-          { ...keyVolumeProps }
-          { ...keyADSRProps }
-          style={{ ...keySizing }}
-        />
+      ))}
       </div>
     );
   }

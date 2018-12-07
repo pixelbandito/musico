@@ -73,11 +73,18 @@ class Key extends Component {
   }
 
   render() {
-    const { style } = this.props;
+    const {
+      note,
+      style,
+    } = this.props;
+
     const { playing } = this.state;
+
+    const isBlack = note.indexOf('#') >= 0 || note.indexOf('b') >= 0;
 
     const className = classNames(Key.baseClass, {
       [`${Key.baseClass}--active`]: playing,
+      [`${Key.baseClass}--black`]: isBlack,
     });
 
     return (
@@ -98,6 +105,12 @@ class Key extends Component {
             display: 'grid',
             gridTemplateRows: '1fr',
             gridTemplateColumns: '1fr',
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: '0',
+            left: '0',
+            color: isBlack ? '#444' : '#ccc',
           }}
         />
       </div>

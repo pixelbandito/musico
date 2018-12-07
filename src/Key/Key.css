@@ -12,9 +12,24 @@
     rgb(128, 128, 128) 91%,
     rgb(160, 160, 160)
   );
+
+  /* Black keys */
+  --key-top-black: rgb(40, 40, 40);
+  --gradient-black: linear-gradient(
+    var(--key-top-black),
+    rgb(50, 50, 50) 90%,
+    rgb(60, 60, 60) 90%,
+    rgb(60, 60, 60) 91%,
+    rgb(20, 20, 20) 91%,
+    rgb(30, 30, 30)
+  );
 }
 
 .Key {
+  position: relative;
+}
+
+.Key:not(.Key--black) {
   /* Transition applies to the return to this state */
   transition:
     var(--transition-duration-unstrike) linear background-position-y,
@@ -32,7 +47,40 @@
   box-shadow: inset 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
-.Key--active {
+.Key.Key--active:not(.Key--black) {
+  transition:
+    var(--transition-duration-strike) linear background-position-y,
+    var(--transition-duration-strike) linear box-shadow,
+    var(--transition-duration-strike) linear border-left-color;
+  background-position-y: 2vh;
+  box-shadow: inset 3px 0px 3px rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+
+.Key.Key--black {
+  /* Transition applies to the return to this state */
+  transition:
+    var(--transition-duration-unstrike) linear background-position-y,
+    var(--transition-duration-unstrike) linear box-shadow,
+    var(--transition-duration-unstrike) linear border-left-color;
+  background-position-y: 0vh;
+  background-color: var(--key-top-black);
+  background-image: var(--gradient-black);
+  background-repeat: no-repeat;
+  border: 0 solid transparent;
+  border-left-width: 1px;
+  border-left-color: rgba(255, 255, 255, 0);
+  border-right-width: 1px;
+  border-right-color: #ccc;
+  box-shadow: inset 0px 0px 0px rgba(0, 0, 0, 0);
+  flex: 0 0 0 !important;
+  margin: 0 calc(-2.5vw - 1px);
+  padding: 0 2.5vw;
+  height: 50%;
+  z-index: 1;
+}
+
+.Key.Key--black.Key--active {
   transition:
     var(--transition-duration-strike) linear background-position-y,
     var(--transition-duration-strike) linear box-shadow,

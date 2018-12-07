@@ -123,8 +123,8 @@ class StrikeableDraggable extends Component {
       <div
         ref={this.DraggableParent}
         style={{
-          ...style,
           position: 'relative',
+          ...style,
         }}
       >
         <Draggable
@@ -141,10 +141,12 @@ class StrikeableDraggable extends Component {
             <div>
               <div style={{
                 userSelect: 'none',
-                color: '#ccc',
-                textShadow: '0 1px 0 #fff',
+                textShadow: '0 1px 0 rgba(255, 255, 255, 0.5)',
                 fontSize: '11px',
                 wordWrap: 'break-word',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
               }}>
                 Drag me
                 <br />
