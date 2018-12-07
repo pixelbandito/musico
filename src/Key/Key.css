@@ -1,3 +1,43 @@
-.key {
-  background: white;
+:root {
+  --transition-duration-strike: 0.05s;
+  --transition-duration-unstrike: 0.05s;
+
+  /* White keys */
+  --key-top-white: rgb(240, 240, 240);
+  --gradient-white: linear-gradient(
+    var(--key-top-white),
+    rgb(250, 250, 250) 90%,
+    rgb(220, 220, 220) 90%,
+    rgb(220, 220, 220) 91%,
+    rgb(128, 128, 128) 91%,
+    rgb(160, 160, 160)
+  );
+}
+
+.Key {
+  /* Transition applies to the return to this state */
+  transition:
+    var(--transition-duration-unstrike) linear background-position-y,
+    var(--transition-duration-unstrike) linear box-shadow,
+    var(--transition-duration-unstrike) linear border-left-color;
+  background-position-y: 0vh;
+  background-color: var(--key-top-white);
+  background-image: var(--gradient-white);
+  background-repeat: no-repeat;
+  border: 0 solid transparent;
+  border-left-width: 1px;
+  border-left-color: rgba(255, 255, 255, 0);
+  border-right-width: 1px;
+  border-right-color: #ccc;
+  box-shadow: inset 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+.Key--active {
+  transition:
+    var(--transition-duration-strike) linear background-position-y,
+    var(--transition-duration-strike) linear box-shadow,
+    var(--transition-duration-strike) linear border-left-color;
+  background-position-y: 2vh;
+  box-shadow: inset 3px 0px 3px rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(0, 0, 0, 0.1);
 }

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { noteValues } from './notes';
 import Strikeable from '../Strikeable';
 
 class Key extends Component {
+  static baseClass = 'Key'
+
   state = {
     playing: false,
+    nextVolume: this.props.volMute,
     context: (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
   }
 
@@ -25,22 +29,32 @@ class Key extends Component {
     this.gainNode.gain.setValueAtTime(volMute, context.currentTime);
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(context.destination);
+    this.nextGain = null;
   }
 
-  handleStrikeStart = () => {
-    console.log('handleStrikeStart');
-
+  handleStrikeStart = (event) => {
     const {
       volMax,
       volMute,
       attack,
-      decay
+      decay,
+      sustain
     } = this.props;
 
     const { context } = this.state;
     this.gainNode.gain.cancelScheduledValues(context.currentTime);
-    this.gainNode.gain.exponentialRampToValueAtTime(volMax, context.currentTime + attack);
-    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + decay);
+    setTimeout(() => {
+      this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 + 0.2, context.currentTime + attack);
+      setTimeout(() => {
+        console.log({ currentTime: context.currentTime, decay });
+        this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 * 0.5 + 0.2, context.currentTime + decay);
+        setTimeout(() => {
+          this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + sustain);
+        });
+      });
+    });
+    // this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 + 0.2, context.currentTime + attack);
+    // this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + sustain);
     this.setState({ playing: true });
   }
 
@@ -53,23 +67,27 @@ class Key extends Component {
     console.log('handleStrikeEnd');
     const { context } = this.state;
     this.gainNode.gain.cancelScheduledValues(context.currentTime);
-    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release);
+    setTimeout(() => this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release));
+    // this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release);
     this.setState({ playing: false });
   }
 
   render() {
     const { style } = this.props;
+    const { playing } = this.state;
+
+    const className = classNames(Key.baseClass, {
+      [`${Key.baseClass}--active`]: playing,
+    });
 
     return (
       <div
-        className="Key"
+        className={className}
         style={{
           ...style,
           display: 'grid',
           gridTemplateRows: '1fr',
           gridTemplateColumns: '1fr',
-          border: '1px solid lightgray',
-          backgroundColor: this.state.playing ? 'pink' : 'ivory',
         }}
       >
         <Strikeable
@@ -93,6 +111,7 @@ Key.propTypes = {
   volMax: PropTypes.number,
   attack: PropTypes.number,
   decay: PropTypes.number,
+  sustain: PropTypes.number,
   release: PropTypes.number,
 };
 
@@ -101,7 +120,8 @@ Key.defaultProps = {
   volMute: 0.0001,
   volMax: 1,
   attack: 0.03,
-  decay: 2,
+  decay: 0.1,
+  sustain: 2,
   release: 1,
 };
 

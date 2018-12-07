@@ -10,6 +10,7 @@ class KeyBoard extends Component {
       volMax,
       attack,
       decay,
+      sustain,
       release,
     } = this.props;
 
@@ -27,6 +28,7 @@ class KeyBoard extends Component {
     const keyADSRProps = {
       attack,
       decay,
+      sustain,
       release,
     };
 
@@ -38,7 +40,7 @@ class KeyBoard extends Component {
           flexFlow: 'row nowrap',
           alignItems: 'stretch',
           justifyContent: 'flex-start',
-          height: '100vh',
+          height: '90vh',
           userSelect: 'none',
         }}
       >
@@ -101,13 +103,15 @@ Key.propTypes = {
   volMax: PropTypes.number,
   attack: PropTypes.number,
   decay: PropTypes.number,
+  sustain: PropTypes.number,
 };
 
 Key.defaultProps = {
   volMute: 0.0001,
   volMax: 1,
   attack: 0.03,
-  decay: 2,
+  decay: 0.03,
+  sustain: 2,
   release: 1,
 };
 

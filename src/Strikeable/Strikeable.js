@@ -139,7 +139,13 @@ class StrikeableDraggable extends Component {
         >
           {(event) => (
             <div>
-              <div style={{ userSelect: 'none' }}>
+              <div style={{
+                userSelect: 'none',
+                color: '#ccc',
+                textShadow: '0 1px 0 #fff',
+                fontSize: '11px',
+                wordWrap: 'break-word',
+              }}>
                 Drag me
                 <br />
                 X: {this.state.touchX}
