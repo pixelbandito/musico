@@ -38,23 +38,23 @@ class Key extends Component {
       volMute,
       attack,
       decay,
-      sustain
+      decayLevel,
+      sustain,
     } = this.props;
 
     const { context } = this.state;
+    const currentValue = this.gainNode.gain.value;
+    const keyMultiplier = event.touchY * 0.6 + 0.4;
+    const volAttackTarget = volMax * keyMultiplier;
+    const volDecayTarget = volAttackTarget * (decayLevel || 0.3);
+
+    console.log(context.currentTime);
+
     this.gainNode.gain.cancelScheduledValues(context.currentTime);
-    setTimeout(() => {
-      this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 + 0.2, context.currentTime + attack);
-      setTimeout(() => {
-        console.log({ currentTime: context.currentTime, decay });
-        this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 * 0.5 + 0.2, context.currentTime + decay);
-        setTimeout(() => {
-          this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + sustain);
-        });
-      });
-    });
-    // this.gainNode.gain.exponentialRampToValueAtTime(volMax * event.touchY * 0.8 + 0.2, context.currentTime + attack);
-    // this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + sustain);
+    this.gainNode.gain.setValueAtTime(currentValue, context.currentTime);
+    this.gainNode.gain.exponentialRampToValueAtTime(volAttackTarget, context.currentTime + attack);
+    this.gainNode.gain.exponentialRampToValueAtTime(volDecayTarget, context.currentTime + attack + decay);
+    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + attack + decay + sustain);
     this.setState({ playing: true });
   }
 
@@ -66,9 +66,11 @@ class Key extends Component {
 
     console.log('handleStrikeEnd');
     const { context } = this.state;
+    const currentValue = this.gainNode.gain.value;
+
     this.gainNode.gain.cancelScheduledValues(context.currentTime);
-    setTimeout(() => this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release));
-    // this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release);
+    this.gainNode.gain.setValueAtTime(currentValue, context.currentTime);
+    this.gainNode.gain.exponentialRampToValueAtTime(volMute, context.currentTime + release);
     this.setState({ playing: false });
   }
 
@@ -124,6 +126,7 @@ Key.propTypes = {
   volMax: PropTypes.number,
   attack: PropTypes.number,
   decay: PropTypes.number,
+  decayLevel: PropTypes.number,
   sustain: PropTypes.number,
   release: PropTypes.number,
 };
@@ -134,6 +137,7 @@ Key.defaultProps = {
   volMax: 1,
   attack: 0.03,
   decay: 0.1,
+  decayLevel: 0.5,
   sustain: 2,
   release: 1,
 };

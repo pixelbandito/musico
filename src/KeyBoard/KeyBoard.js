@@ -10,6 +10,7 @@ class KeyBoard extends Component {
       volMax,
       attack,
       decay,
+      decayLevel,
       sustain,
       release,
     } = this.props;
@@ -28,6 +29,7 @@ class KeyBoard extends Component {
     const keyADSRProps = {
       attack,
       decay,
+      decayLevel,
       sustain,
       release,
     };
@@ -58,6 +60,7 @@ class KeyBoard extends Component {
         'A#4',
         'B4',
         'C5',
+        'C#5',
       ].map(note => (
         <Key
           key={note}
@@ -78,6 +81,7 @@ Key.propTypes = {
   volMax: PropTypes.number,
   attack: PropTypes.number,
   decay: PropTypes.number,
+  decayLevel: PropTypes.number,
   sustain: PropTypes.number,
 };
 
@@ -86,6 +90,7 @@ Key.defaultProps = {
   volMax: 1,
   attack: 0.03,
   decay: 0.03,
+  decayLevel: 0.5,
   sustain: 2,
   release: 1,
 };

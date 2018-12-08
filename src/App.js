@@ -9,6 +9,7 @@ class App extends Component {
   state = {
     attack: 0.05,
     decay: 0.05,
+    decayLevel: 0.5,
     sustain: 3,
     release: 1,
   }
@@ -26,6 +27,7 @@ class App extends Component {
     const {
       attack,
       decay,
+      decayLevel,
       sustain,
       release,
     } = this.state;
@@ -33,6 +35,7 @@ class App extends Component {
     const keyADSRProps = {
       attack,
       decay,
+      decayLevel,
       sustain,
       release,
     };
@@ -63,6 +66,11 @@ class App extends Component {
               type="number"
               placeholder="Decay"
               onChange={this.update('decay')}
+            />
+            <input
+              type="number"
+              placeholder="Decay level"
+              onChange={this.update('decayLevel')}
             />
             <input
               type="number"
