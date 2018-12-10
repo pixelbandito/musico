@@ -44,11 +44,12 @@ class Draggable extends React.Component {
     this.setState({ initial: touchPosition, current: touchPosition });
   }
 
-  handleTouchMove(touchPosition) {
+  handleTouchMove(touchPosition, event) {
+    console.log('handleTouchMove', { touchPosition, event });
     const { deltas, current } = this.state;
     const touchDeltas = computeDeltas(current, touchPosition);
     const componentPosition = computePositionStyle(this.props.position, touchDeltas);
-    this.props.onDrag && this.props.onDrag({ ...componentPosition, ...current });
+    this.props.onDrag && this.props.onDrag({ ...componentPosition, ...current }, event);
 
     const latest = {dx: deltas.dx + touchDeltas.dx, dy: deltas.dy + touchDeltas.dy};
     this.setState({ deltas: latest, current: touchPosition });

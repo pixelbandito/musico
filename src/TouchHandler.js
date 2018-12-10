@@ -76,7 +76,7 @@ class TouchHandler {
 
     child.props.onTouchStart && child.props.onTouchStart(synthEvent);
     onTouchStart && onTouchStart(synthEvent);
-    this._onTouchStart(touchPosition);
+    this._onTouchStart(touchPosition, synthEvent);
   }
 
   _handleMouseDown(touchPosition, synthEvent, child, onMouseDown) {
@@ -85,22 +85,22 @@ class TouchHandler {
 
     child.props.onMouseDown && child.props.onMouseDown(synthEvent);
     onMouseDown && onMouseDown(synthEvent);
-    this._onTouchStart(touchPosition);
+    this._onTouchStart(touchPosition, synthEvent);
   }
 
-  _handleTouchMove(touchPosition) {
+  _handleTouchMove(touchPosition, event) {
     if (!this._currentAnimationFrame) {
       this._currentAnimationFrame = raf(() => {
         this._currentAnimationFrame = null;
-        this._onTouchMove(touchPosition);
+        this._onTouchMove(touchPosition, event);
       });
     }
   }
 
-  _handleTouchEnd(touchPosition) {
+  _handleTouchEnd(touchPosition, event) {
     this.cancelAnimationFrame();
     this.removeListeners();
-    this._onTouchEnd(touchPosition);
+    this._onTouchEnd(touchPosition, event);
   }
 }
 

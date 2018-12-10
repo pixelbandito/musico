@@ -57,17 +57,47 @@ class StrikeableDraggable extends Component {
 
     const { onStrikeStart } = this.props;
 
-    this.setState({
-      lastEvent: 'handleTouchStart',
-    });
+    if (!event.touches || event.touches.length > 0) {
 
-    onStrikeStart && onStrikeStart();
+    }
+
+    if (this.DraggableParent.current) {
+      const {
+        offsetWidth: width,
+        offsetHeight: height,
+        offsetLeft: parentX,
+        offsetTop: parentY,
+      } = this.DraggableParent.current;
+
+      const touch = [...event.touches].pop() || {};
+      const touchOffsetX = touch.clientX;
+      const touchOffsetY = touch.clientY;
+      const touchX = (touchOffsetX - parentX) / width;
+      const touchY = (touchOffsetY - parentY) / height;
+
+      this.setState({
+        dragging: true,
+        height,
+        initialTouchX: touchX,
+        initialTouchY: touchY,
+        parentX,
+        parentY,
+        touchX: touchX,
+        touchY: touchY,
+        width,
+        lastEvent: 'handleTouchStart',
+      });
+
+      console.log('onStrikeStart', touchY);
+
+      onStrikeStart && onStrikeStart({ touchY });
+    }
   }
 
-  handleDrag = (event) => {
-    console.log('handleDrag');
+  handleDrag = (event, nativeEvent) => {
+    console.log('handleDrag', { nativeEvent });
 
-    const { onStrike } = this.props;
+    // const { onStrike } = this.props;
 
     const {
       dragging,
@@ -77,30 +107,32 @@ class StrikeableDraggable extends Component {
       width,
     } = this.state;
 
-    if (dragging) {
-      const touchOffsetX = event.x;
-      const touchOffsetY = event.y;
-      const touchX = (touchOffsetX - parentX) / width;
-      const touchY = (touchOffsetY - parentY) / height;
+    if (!dragging || !this.DraggableParent.current || !this.DraggableParent.current.contains(nativeEvent.target)) {
+      return;
+    }
 
-      if (touchX < 0 || touchX > 1 || touchY < 0 || touchY > 1) {
-        this.setState({
-          dragging: false,
-        });
+    const touchOffsetX = event.x;
+    const touchOffsetY = event.y;
+    const touchX = (touchOffsetX - parentX) / width;
+    const touchY = (touchOffsetY - parentY) / height;
 
-        this.handleDragEnd();
-
-        return;
-      }
-
+    if (touchX < 0 || touchX > 1 || touchY < 0 || touchY > 1) {
       this.setState({
-        touchX: touchX,
-        touchY: touchY,
-        lastEvent: 'handleDrag',
+        dragging: false,
       });
 
-      onStrike && onStrike({ touchY });
+      this.handleDragEnd();
+
+      return;
     }
+    //
+    // this.setState({
+    //   touchX: touchX,
+    //   touchY: touchY,
+    //   lastEvent: 'handleDrag',
+    // });
+    //
+    // onStrike && onStrike({ touchY });
   }
 
   handleDragEnd = () => {
