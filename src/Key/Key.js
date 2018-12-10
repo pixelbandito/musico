@@ -9,6 +9,7 @@ class Key extends Component {
   static baseClass = 'Key'
 
   state = {
+    started: false,
     playing: false,
     nextVolume: this.props.volMute,
     context: (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
@@ -20,12 +21,14 @@ class Key extends Component {
       volMute,
     } = this.props;
 
-    const { context } = this.state;
+    const {
+      context,
+    } = this.state;
+
     this.gainNode = context.createGain()
     this.oscillator = context.createOscillator()
     this.oscillator.type = 'sine';
     this.oscillator.frequency.value = noteValues[note];
-    this.oscillator.start(0);
     this.gainNode.gain.setValueAtTime(volMute, context.currentTime);
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(context.destination);
@@ -41,6 +44,14 @@ class Key extends Component {
       decayLevel,
       sustain,
     } = this.props;
+
+    const {
+      started,
+    } = this.state;
+
+    if (!started) {
+      this.setState({ started: true }, () => this.oscillator.start(0))
+    }
 
     const { context } = this.state;
     const currentValue = this.gainNode.gain.value;
