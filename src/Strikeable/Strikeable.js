@@ -171,6 +171,7 @@ class StrikeableDraggable extends Component {
         >
           {(event) => (
             <div>
+            {/*
               <div style={{
                 userSelect: 'none',
                 textShadow: '0 1px 0 rgba(255, 255, 255, 0.5)',
@@ -188,6 +189,7 @@ class StrikeableDraggable extends Component {
                 <br />
                 Last event: {this.state.lastEvent}
               </div>
+            */}
               <div
                 style={{
                   ...style,

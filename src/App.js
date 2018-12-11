@@ -87,6 +87,8 @@ class App extends Component {
             flex: '1 1 auto',
             minHeight: '0',
             overflow: 'hidden',
+            display: 'flex',
+            flexFlow: 'column nowrap',
           }}>
             <KeyBoard
               volMute={0.0001}

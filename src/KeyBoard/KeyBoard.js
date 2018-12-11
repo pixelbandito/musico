@@ -43,6 +43,8 @@ class KeyBoard extends Component {
           alignItems: 'stretch',
           justifyContent: 'flex-start',
           height: '90vh',
+          flex: '1 1 auto',
+          minHeight: '0',
           userSelect: 'none',
         }}
       >
