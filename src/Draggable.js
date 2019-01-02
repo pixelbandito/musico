@@ -45,7 +45,6 @@ class Draggable extends React.Component {
   }
 
   handleTouchMove(touchPosition, event) {
-    console.log('handleTouchMove', { touchPosition, event });
     const { deltas, current } = this.state;
     const touchDeltas = computeDeltas(current, touchPosition);
     const componentPosition = computePositionStyle(this.props.position, touchDeltas);

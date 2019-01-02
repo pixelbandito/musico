@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import Key from '../Key';
 
 class KeyBoard extends Component {
+  state = {
+    context: (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
+  }
+
   render() {
     const {
       volMute,
@@ -14,6 +18,8 @@ class KeyBoard extends Component {
       sustain,
       release,
     } = this.props;
+
+    const { context } = this.state;
 
     const keySizing = {
       flex: '1 1 auto',
@@ -65,6 +71,7 @@ class KeyBoard extends Component {
         'C#5',
       ].map(note => (
         <Key
+          context={context}
           key={note}
           note={note}
           { ...keyVolumeProps }

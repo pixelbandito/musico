@@ -12,7 +12,7 @@ class Key extends Component {
     started: false,
     playing: false,
     nextVolume: this.props.volMute,
-    context: (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
+    context: this.props.context || (window.AudioContext && new window.AudioContext()) || (window.webkitAudioContext && new window.webkitAudioContext()) || null,
   }
 
   componentDidMount() {
@@ -59,8 +59,6 @@ class Key extends Component {
     const volAttackTarget = volMax * keyMultiplier;
     const volDecayTarget = volAttackTarget * (decayLevel || 0.3);
 
-    console.log(context.currentTime);
-
     this.gainNode.gain.cancelScheduledValues(context.currentTime);
     this.gainNode.gain.setValueAtTime(currentValue, context.currentTime);
     this.gainNode.gain.exponentialRampToValueAtTime(volAttackTarget, context.currentTime + attack);
@@ -75,7 +73,6 @@ class Key extends Component {
       release,
     } = this.props;
 
-    console.log('handleStrikeEnd');
     const { context } = this.state;
     const currentValue = this.gainNode.gain.value;
 
