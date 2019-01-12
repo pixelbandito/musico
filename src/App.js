@@ -52,7 +52,7 @@ class App extends Component {
               <title>Musico</title>
           </Helmet>
           <div style={{
-            flex: '0 0 10vw',
+            flex: '0 0 auto',
             minHeight: '0',
             display: 'grid',
             gridTemplateColumns: '1fr',
