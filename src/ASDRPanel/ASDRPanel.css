@@ -1,0 +1,30 @@
+.ASDRPanel {
+  background: rgb(40, 40, 40);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.ASDRPanel__knobs {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.ASDRPanel__control {
+  margin: 0 20px;
+  text-align: center;
+}
+
+.ASDRPanel__label {
+  color: white;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.ASDRPanel__input.ASDRPanel__input--knob {}
+
+.ASDRPanel__input.ASDRPanel__input--number {
+  color: black;
+}

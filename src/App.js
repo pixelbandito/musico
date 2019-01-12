@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
+
+import './global.css';
 import './App.css';
 
-// import Key from '../Key';
+import ASDRPanel from './ASDRPanel';
 import KeyBoard from './KeyBoard';
 
 class App extends Component {
@@ -10,18 +12,12 @@ class App extends Component {
     attack: 0.05,
     decay: 0.05,
     decayLevel: 0.5,
-    sustain: 3,
     release: 1,
+    sustain: 3,
+    volMax: 1,
   }
 
-  update = (key) => (event) => {
-    const nextValue = parseInt(event.target.value, 10);
-    if (!isNaN(nextValue)) {
-      this.setState({
-        [key]: nextValue,
-      });
-    }
-  }
+  updateADSRProps = key => value => this.setState({ [key]: value })
 
   render() {
     const {
@@ -30,14 +26,16 @@ class App extends Component {
       decayLevel,
       sustain,
       release,
+      volMax,
     } = this.state;
 
-    const keyADSRProps = {
+    const ADSRProps = {
       attack,
       decay,
       decayLevel,
       sustain,
       release,
+      volMax,
     };
 
     return (
@@ -56,31 +54,14 @@ class App extends Component {
           <div style={{
             flex: '0 0 10vw',
             minHeight: '0',
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gridTemplateRows: '1fr',
           }}>
-            <input
-              type="number"
-              placeholder="Attack"
-              onChange={this.update('attack')}
-            />
-            <input
-              type="number"
-              placeholder="Decay"
-              onChange={this.update('decay')}
-            />
-            <input
-              type="number"
-              placeholder="Decay level"
-              onChange={this.update('decayLevel')}
-            />
-            <input
-              type="number"
-              placeholder="Sustain"
-              onChange={this.update('sustain')}
-            />
-            <input
-              type="number"
-              placeholder="Release"
-              onChange={this.update('release')}
+            <ASDRPanel
+              ADSRProps={ADSRProps}
+              update={this.update}
+              updateADSRProps={this.updateADSRProps}
             />
           </div>
           <div style={{
@@ -92,8 +73,8 @@ class App extends Component {
           }}>
             <KeyBoard
               volMute={0.0001}
-              volMax={1}
-              {...keyADSRProps}
+              volMax={volMax}
+              {...ADSRProps}
             />
           </div>
       </div>

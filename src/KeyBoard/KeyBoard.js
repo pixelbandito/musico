@@ -10,13 +10,13 @@ class KeyBoard extends Component {
 
   render() {
     const {
-      volMute,
-      volMax,
       attack,
       decay,
       decayLevel,
-      sustain,
       release,
+      sustain,
+      volMax,
+      volMute,
     } = this.props;
 
     const { context } = this.state;
@@ -28,8 +28,8 @@ class KeyBoard extends Component {
     };
 
     const keyVolumeProps = {
-      volMute,
       volMax,
+      volMute,
     };
 
     const keyADSRProps = {
